@@ -1,4 +1,7 @@
-# End-to-End Deep Learning Model Development with CIFAR10
+## End-to-End Image Classification Model Development
+
+In this repository, a lightweight deep learning model was trained on the CIFAR10 dataset to classify images into 10 objects. Final model achieved 90% accuracy on 10,000 testing images. Model architecture was inspired by [Karen Simonyan, Andrew Zisserman
+ - Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556). A simple REST API built in Python with Flask was used for model deployment.
 
 <!-- TABLE OF CONTENTS -->
 <summary><h2 style="display: inline-block">Table of Contents</h2>
@@ -26,6 +29,22 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Model Development
+
+The model was developed on the CIFAR-10 dataset consists of 60,000 32x32 pixels colored images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images. For more information, visit: https://www.cs.toronto.edu/~kriz/cifar.html.
+
+Also, This tech report (Chapter 3) describes the dataset and the methodology followed when collecting it in much greater detail. [Learning Multiple Layers of Features from Tiny Images, Alex Krizhevsky, 2009.](https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf)
+
+The model architecture were inspired by [Karen Simonyan, Andrew Zisserman, 2014](https://arxiv.org/abs/1409.1556). This paper examined very deep ConvNet models with very small (3x3) convolution filters in the large-scale image recognition setting. Their result is the famous VGG16/VGG19 models.
+
+A VGG layer is defined as:
+
+```python
+model.add(Conv2D(32, (3, 3), strides=1, padding='same', activation='relu'))
+model.add(Conv2D(32, (3, 3), strides=1, padding='same', activation='relu'))
+model.add(MaxPooling2D(2, 2))
+```
+
+Since our problem is much more simpler than the one in the paper.
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
