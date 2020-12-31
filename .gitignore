@@ -2,3 +2,6 @@
 *.tar.gz
 *.pem
 *.csv
+/rest_api/venv
+/models
+/.ipynb_checkpoints
