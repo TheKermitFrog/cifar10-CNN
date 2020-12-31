@@ -46,7 +46,7 @@ model.add(MaxPooling2D(2, 2))
 
 Since our problem here is much more simpler than the one in the paper. Shallower models with 1 to 3 VGG layers, followed by 2 dense layers were examined as baseline models.
 
-![Kiku](models/base3/base3_plot.png)
+<img src="images/base3_plot.png" alt="Baseline Model" width="200"/>
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
