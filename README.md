@@ -44,7 +44,9 @@ model.add(Conv2D(32, (3, 3), strides=1, padding='same', activation='relu'))
 model.add(MaxPooling2D(2, 2))
 ```
 
-Since our problem is much more simpler than the one in the paper.
+Since our problem here is much more simpler than the one in the paper. Shallower models with 1 to 3 VGG layers, followed by 2 dense layers were examined as baseline models.
+
+![Kiku](models/base3/base3_plot.png)
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
