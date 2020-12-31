@@ -1,11 +1,10 @@
+# End-to-End Deep Learning Model Development with CIFAR10
+
 <!-- TABLE OF CONTENTS -->
-<summary><h2 style="display: inline-block">Table of Contents</h2></summary><details open="open">
+<summary><h2 style="display: inline-block">Table of Contents</h2>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+      <a href="#model-development">Model Development</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -26,22 +25,11 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+## Model Development
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
 `github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
-
-
-### Built With
-
-* []()
-* []()
-* []()
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
