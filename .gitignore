@@ -3,5 +3,8 @@
 *.pem
 *.csv
 /rest_api/venv
+/rest_api/.DS_Store
 /models
 /.ipynb_checkpoints
+file_parsing.ipynb
+.DS_Store
