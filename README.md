@@ -34,7 +34,9 @@ The model was developed on the CIFAR-10 dataset consists of 60,000 32x32 pixels 
 
 Also, This tech report (Chapter 3) describes the dataset and the methodology followed when collecting it in much greater detail. [Learning Multiple Layers of Features from Tiny Images, Alex Krizhevsky, 2009.](https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf)
 
-The model architecture were inspired by [Karen Simonyan, Andrew Zisserman, 2014](https://arxiv.org/abs/1409.1556). This paper examined very deep ConvNet models with very small (3x3) convolution filters in the large-scale image recognition setting. Their result is the famous VGG16/VGG19 models.
+Models were trained using AWS EC2, with a p3.x2large instance.
+
+The model architecture were inspired by [Karen Simonyan, Andrew Zisserman, 2014](https://arxiv.org/abs/1409.1556). This paper examined very deep ConvNet models with very small (3x3) convolution filters in the large-scale image recognition setting. Their results are the famous VGG16/VGG19 models.
 
 A VGG layer is defined as:
 
@@ -44,9 +46,17 @@ model.add(Conv2D(32, (3, 3), strides=1, padding='same', activation='relu'))
 model.add(MaxPooling2D(2, 2))
 ```
 
-Since our problem here is much more simpler than the one in the paper. Shallower models with 1 to 3 VGG layers, followed by 2 dense layers were examined as baseline models.
+Since our problem here is much more simpler than the one in the paper. Shallower models with 1 to 3 VGG layers followed by 2 dense layers were examined as baseline models.
 
-<img src="images/base3_plot.png" alt="Baseline Model" width="200"/>
+<img src="images/base3_plot.png" alt="Baseline Model" width="600"/>
+
+Each model was able to achieved almost 100% in training but only got around 70% in testing, which signals over-fitting. However, high accuracy in training is good news, it means our baseline models are able to picking up structures in the dataset and we are not likely to need more VGG layers.
+
+3 VGG layers model were selected to proceed with because it was able to get the highest testing accuracy out of the three baseline models, also because it takes neglectable extra computation time(under 2 mins difference for training 100 epochs). After some research, it seems like ConvNet-Relu-BatchNorm is a common triplet widely used in image recognition. BatchNorm layers can also act as a regularizer. Other than BatchNorm, L2 regularization and DropOut layers were also examined.
+
+<img src="images/VGG3_bn_plot.png" alt="BatchNorm Model" width="600"/>
+
+Out of three methods tried, adding BatchNorm layers raised testing accuracy by the most, from 70% to 82.37%. The other two methods, L2 regularization and DropOut, were also able to increase the accuracy by 5%, and 9%, separately. 
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
