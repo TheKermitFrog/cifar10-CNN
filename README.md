@@ -10,7 +10,7 @@ In this repository, a lightweight deep learning model was trained on the CIFAR10
       <a href="#model-development">Model Development</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#REST API">Model Deployment with REST API</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
@@ -72,30 +72,34 @@ Combining every regularize approaches above, and using a 0.001 learning rate, th
 
 <img src="images/augmented_VGG3_normalized_3_250.png" alt="Regularize Model" width="600"/>
 
-The model ended up at 88.9% testing accuracy, but achieved 90.14% at the 249th epochs, the accuracy wiggled around 89% at the last 30 epochs, so I decided to lower the learning rate to 0.0001 and let the model run for 25 extra epochs.
+The model ended up at 88.9% testing accuracy, but achieved 90.14% at the 249th epochs, the accuracy wiggled around 89% at the last 30 epochs, so I decided to lower the learning rate to 0.0001 and let the model run for 25 extra epochs, and see if the model can hit 90% consistently.
 
 <img src="images/augmented_VGG3_normalized_3_250_1_25_plot.png" alt="Regularize Model" width="600"/>
 
-The model hit 90% consistently in the 25 extra epochs. This is our final model and we will use this model to build our REST API.
+The model hit 90% consistently in the 25 extra epochs. This is the final model and we will use this model to build our REST API.
 
+<!-- REST API -->
+## REST API
+
+Codes in this section was mainly taken from [Building a simple Keras + deep learning REST API] (https://blog.keras.io/building-a-simple-keras-deep-learning-rest-api.html) with little modification. All codes and final model for the REST API can be found in rest_api folder under this repository.
+
+Using Flask, a /predict endpoint was set up to accept POST requests to upload image for classification. Our API would resize and preprocess uploaded image, and feed it to our model to make prediction.
 
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
 `github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
 
-<!-- GETTING STARTED -->
-## Getting Started
 
-To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+* tensorflow, Pillow and Flask
+
   ```sh
-  npm install npm@latest -g
+  pip install requirements.txt
   ```
+
 
 ### Installation
 
