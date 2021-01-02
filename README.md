@@ -1,7 +1,7 @@
 ## End-to-End Image Classification Model Development
 
-In this repository, a lightweight deep learning model was trained on the CIFAR10 dataset to classify images into 10 objects. Final model achieved 90% accuracy on 10,000 testing images. Model architecture was inspired by [Karen Simonyan, Andrew Zisserman
- - Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556). A simple REST API built in Python with Flask was used for model deployment.
+In this repository, a lightweight deep learning model was trained on the CIFAR10 dataset to classify images into 10 objects. The final model achieved 90% accuracy on 10,000 testing images. The model architecture was inspired by [Karen Simonyan, Andrew Zisserman
+ - Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556). A simple REST API built with Flask was used for model deployment.
 
 <!-- TABLE OF CONTENTS -->
 <summary><h2 style="display: inline-block">Table of Contents</h2>
@@ -16,10 +16,6 @@ In this repository, a lightweight deep learning model was trained on the CIFAR10
       </ul>
     </li>
     <li><a href="#rest-api-usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
@@ -33,7 +29,7 @@ The model was developed on the CIFAR-10 dataset consists of 60,000 32x32 pixels 
 
 Also, This tech report (Chapter 3) describes the dataset and the methodology followed when collecting it in much greater detail. [Learning Multiple Layers of Features from Tiny Images, Alex Krizhevsky, 2009.](https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf)
 
-Models were trained using AWS EC2, with a p3.x2large instance.
+Models were trained using AWS EC2, with a p3.x2large instance. All code used for model training can be found in cifar10_CNN.ipynb, and cifar10_model_training.ipynb
 
 The model architecture were inspired by [Karen Simonyan, Andrew Zisserman, 2014](https://arxiv.org/abs/1409.1556). This paper examined very deep ConvNet models with very small (3x3) convolution filters in the large-scale image recognition setting. Their results are the famous VGG16/VGG19 models.
 
@@ -45,13 +41,13 @@ model.add(Conv2D(32, (3, 3), strides=1, padding='same', activation='relu'))
 model.add(MaxPooling2D(2, 2))
 ```
 
-Since our problem here is much more simpler than the one in the paper. Shallower models with 1 to 3 VGG layers followed by 2 dense layers were examined as baseline models.
+Since our problem here is much simpler than the one in the paper. Shallower models with 1 to 3 VGG layers followed by 2 dense layers were examined as baseline models.
 
 <img src="images/base3_plot.png" alt="Baseline Model" width="600"/>
 
-Each model was able to achieved almost 100% in training but only got around 70% in testing, which signals over-fitting. However, high accuracy in training is good news, it means our baseline models are able to picking up structures in the dataset and we are not likely to need more VGG layers.
+Each model achieved almost 100% in training but only got around 70% in testing, which signals over-fitting. However, high accuracy in training indicates our baseline models are able to pick up structures in the dataset and 3 VGG layers may be sufficient to our problem. Baseline model with 3 VGG layers were selected to proceed with because it was able to get the highest testing accuracy out of the three baseline models. In addition, it takes almost neglectable extra computation time to train comparing to 1 and 2-layers model(under 2 mins difference for training 100 epochs).
 
-3 VGG layers model were selected to proceed with because it was able to get the highest testing accuracy out of the three baseline models, also because it takes neglectable extra computation time(under 2 mins difference for training 100 epochs). After some research, it seems like ConvNet-Relu-BatchNorm is a common triplet widely used in image recognition. BatchNorm layers can also act as a regularizer in our case. Other than BatchNorm, L2 regularization, DropOut layers, and data augmentation were also examined. I used Kera's ImageDataGenerator to perform data augmentation on the fly. Configured as below, because our images are low resolution, milder data augmentation were used.
+To reduce overfitting, it seems like ConvNet-Relu-BatchNorm is a common triplet widely used in image recognition. BatchNorm layers can also act as a regularizer in our case. Other than BatchNorm, L2 regularization, DropOut layers, and data augmentation were also examined. I used Kera's ImageDataGenerator to perform data augmentation on the fly. Configured as below, because our images are low resolution, milder data augmentation was used.
 
 ```python
 datagen = ImageDataGenerator(
@@ -63,19 +59,19 @@ datagen = ImageDataGenerator(
 
 <img src="images/augmented_base3_plot.png" alt="Augmented Model" width="600"/>
 
-Out of four methods tried, data augmentation raised testing accuracy by the most, from 70% to 84%. The other methods, BatchNorm, L2 regularization and DropOut, were also able to increase the accuracy by 12%, 5%, and 9%, separately. However, only data augmentation was able to let the model increase testing accuracy continuously by observable amount after 20~30 epochs.
+Out of four methods tried, data augmentation raised testing accuracy by the most, from 70% to 84%. The other methods, BatchNorm, L2 regularization, and DropOut, were also able to increase the accuracy by 12%, 5%, and 9%, separately. However, only data augmentation was able to let the model increase testing accuracy continuously by observable amount after 20~30 epochs.
 
 <img src="images/augmented_VGG3_centered_75_plot.png" alt="Regularize Model" width="600"/>
 
-Combining every regularize approaches above, and using a 0.001 learning rate, the model achieved 86.25% testing accuracy. Normalization, as an alternative to the centering preprocessing step we took earlier, was also evaluted with the same model architecture, and turned out normalization was able to achieve a slightly better result of 87.33%. I decided to switch to normalization. Also, with a few tries, I opted to use 0.0003 as the learning rate for a 250 epochs model.
+Combining every regularize approach above, and using a 0.001 learning rate, the model achieved 86.25% testing accuracy. Normalization, as an alternative to the centering preprocessing step we took earlier, was also evaluated with the same model architecture and turned out normalization was able to achieve a slightly better result of 87.33%. I decided to switch to normalization. Also, with a few tries, I opted to use 0.0003 as the learning rate for a 250 epochs model.
 
 <img src="images/augmented_VGG3_normalized_3_250.png" alt="Regularize Model" width="600"/>
 
-The model ended up at 88.9% testing accuracy, but achieved 90.14% at the 249th epochs, the accuracy wiggled around 89% at the last 30 epochs, so I decided to lower the learning rate to 0.0001 and let the model run for 25 extra epochs, and see if the model can hit 90% consistently.
+The model ended up at 88.9% testing accuracy, but achieved 90.14% at the 249th epochs, the accuracy wiggled around 89% at the last 30 epochs so I decided to lower the learning rate to 0.0001 and let the model run for 25 extra epochs, and see if the model can hit 90% consistently.
 
 <img src="images/augmented_VGG3_normalized_3_250_1_25_plot.png" alt="Regularize Model" width="600"/>
 
-The model hit 90% consistently in the 25 extra epochs. This is the final model and we will use this model to build our REST API.
+The model hit 90% consistently in the 25 extra epochs. This is the final model and we will use this model to build our REST API. It's worth notice that one might be able to get even better accuracy with better learning rate scheduling.
 
 <!-- REST API -->
 ## REST API
@@ -109,67 +105,16 @@ Use cURL to send a post request:
   curl -X POST -F image=@frog.jpg 'http://localhost:5000/predict'
   ```
 
+Example:
+
+Using the frog pic in rest_api folder:
+<img src="rest_api/frog.jpg" alt="frog.jpg" width="600"/>
+
+Returned prediction:
 <img src="images/example_predict.png" alt="example prediction" width="600"/>
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
-* []()
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/github_username
+* [Karen Simonyan, Andrew Zisserman, Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
+* [Building a simple Keras + deep learning REST API](https://blog.keras.io/building-a-simple-keras-deep-learning-rest-api.html)
