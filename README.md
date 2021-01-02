@@ -10,13 +10,12 @@ In this repository, a lightweight deep learning model was trained on the CIFAR10
       <a href="#model-development">Model Development</a>
     </li>
     <li>
-      <a href="#REST API">Model Deployment with REST API</a>
+      <a href="#rest-api">Model Deployment with REST API</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#rest-api-usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -62,7 +61,7 @@ datagen = ImageDataGenerator(
     horizontal_flip=True)
 ```
 
-<img src="images/augmented_base3_plot.png.png" alt="Augmented Model" width="600"/>
+<img src="images/augmented_base3_plot.png" alt="Augmented Model" width="600"/>
 
 Out of four methods tried, data augmentation raised testing accuracy by the most, from 70% to 84%. The other methods, BatchNorm, L2 regularization and DropOut, were also able to increase the accuracy by 12%, 5%, and 9%, separately. However, only data augmentation was able to let the model increase testing accuracy continuously by observable amount after 20~30 epochs.
 
@@ -83,41 +82,23 @@ The model hit 90% consistently in the 25 extra epochs. This is the final model a
 
 Codes in this section was mainly taken from [Building a simple Keras + deep learning REST API] (https://blog.keras.io/building-a-simple-keras-deep-learning-rest-api.html) with little modification. All codes and final model for the REST API can be found in rest_api folder under this repository.
 
-Using Flask, a /predict endpoint was set up to accept POST requests to upload image for classification. Our API would resize and preprocess uploaded image, and feed it to our model to make prediction.
-
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
-
-
-
-### Prerequisites
-
-* tensorflow, Pillow and Flask
-
-  ```sh
-  pip install requirements.txt
-  ```
-
+Using Flask, a /predict endpoint was set up to accept POST requests with image for classification. Our API would resize and preprocess uploaded image, and feed it to our model to make prediction.
 
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/TheKermitFrog/cifar10-CNN.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-
-
+2. Install Prerequisites
+    ```sh
+    pip install requirements.txt
+    ```
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## REST API Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
