@@ -98,10 +98,18 @@ Using Flask, a /predict endpoint was set up to accept POST requests with image f
 <!-- USAGE EXAMPLES -->
 ## REST API Usage
 
+Open up terminal and run:
 
+  ```sh
+ python app.py
+  ```
+Use cURL to send a post request:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+  ```sh
+  curl -X POST -F image=@frog.jpg 'http://localhost:5000/predict'
+  ```
 
+<img src="images/example_predict.png" alt="example prediction" width="600"/>
 
 
 <!-- ROADMAP -->
