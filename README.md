@@ -108,9 +108,11 @@ Use cURL to send a post request:
 Example:
 
 Using the frog pic in rest_api folder:
+
 <img src="rest_api/frog.jpg" alt="frog.jpg" width="600"/>
 
-Returned prediction:
+Prediction returned: 
+
 <img src="images/example_predict.png" alt="example prediction" width="600"/>
 
 <!-- ACKNOWLEDGEMENTS -->
